@@ -11,9 +11,11 @@ import Image from 'next/image';
 import logo from '@/assets/logo.svg';
 
 const LOCALE_OPTIONS = [
-  { code: 'zh-CN', label: '中文', flag: '🇨🇳' },
   { code: 'en-US', label: 'English', flag: '🇺🇸' },
+  { code: 'zh-CN', label: '中文', flag: '🇨🇳' },
   { code: 'ja-JP', label: '日本語', flag: '🇯🇵' },
+  { code: 'id-ID', label: 'Indonesia', flag: '🇮🇩' },
+  { code: 'vi-VN', label: 'Tiếng Việt', flag: '🇻🇳' },
 ] as const;
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {

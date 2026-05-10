@@ -66,6 +66,8 @@ const itemSchema = z.object({
   labelZh: z.string().optional(),
   labelEn: z.string().optional(),
   labelJa: z.string().optional(),
+  labelId: z.string().optional(),
+  labelVi: z.string().optional(),
   parentValue: z.string().optional(), // For hierarchical relationships (e.g., city belongs to country)
   sortOrder: z.preprocess((value) => {
     if (value === '' || value === null || value === undefined) return 0
@@ -229,6 +231,8 @@ export default function DictionariesPage() {
       if (values.labelZh) labelI18n['zh-CN'] = values.labelZh
       if (values.labelEn) labelI18n['en-US'] = values.labelEn
       if (values.labelJa) labelI18n['ja-JP'] = values.labelJa
+      if (values.labelId) labelI18n['id-ID'] = values.labelId
+      if (values.labelVi) labelI18n['vi-VN'] = values.labelVi
 
       const url = '/api/dictionaries'
       const method = editingItem ? 'PUT' : 'POST'
@@ -320,6 +324,8 @@ export default function DictionariesPage() {
       labelZh: '',
       labelEn: '',
       labelJa: '',
+      labelId: '',
+      labelVi: '',
       sortOrder: 0
     })
     setIsItemDialogOpen(true)
@@ -337,6 +343,8 @@ export default function DictionariesPage() {
       labelZh: i18n['zh-CN'] || '',
       labelEn: i18n['en-US'] || '',
       labelJa: i18n['ja-JP'] || '',
+      labelId: i18n['id-ID'] || '',
+      labelVi: i18n['vi-VN'] || '',
       parentValue: item.parentValue || '',
       sortOrder: item.sortOrder
     })
@@ -587,6 +595,14 @@ export default function DictionariesPage() {
                 <div className="space-y-1">
                   <label className="text-xs text-muted-foreground">日本語 (ja-JP)</label>
                   <Input {...itemForm.register('labelJa')} placeholder="日本語ラベル" className="bg-background border-border text-sm" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs text-muted-foreground">Indonesia (id-ID)</label>
+                  <Input {...itemForm.register('labelId')} placeholder="Label Indonesia" className="bg-background border-border text-sm" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs text-muted-foreground">Tiếng Việt (vi-VN)</label>
+                  <Input {...itemForm.register('labelVi')} placeholder="Nhãn tiếng Việt" className="bg-background border-border text-sm" />
                 </div>
               </div>
             </div>
