@@ -41,6 +41,8 @@
     "editTitle": "编辑作品",
     "editDescription": "在下方更新你的作品信息。",
     "basicInfo": "基础信息",
+    "visualAssets": "视觉素材",
+    "creationDetails": "创作详情",
     "projectName": "项目名称",
     "projectNamePlaceholder": "给你的项目起个响亮的名字",
     "country": "所属省份",

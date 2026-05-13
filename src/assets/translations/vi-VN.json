@@ -41,6 +41,8 @@
     "editTitle": "Chỉnh sửa dự án",
     "editDescription": "Cập nhật thông tin dự án của bạn bên dưới.",
     "basicInfo": "Thông tin cơ bản",
+    "visualAssets": "Tài nguyên hình ảnh",
+    "creationDetails": "Chi tiết sáng tác",
     "projectName": "Tên dự án",
     "projectNamePlaceholder": "Đặt tên hấp dẫn cho dự án của bạn",
     "country": "Tỉnh / Khu vực",

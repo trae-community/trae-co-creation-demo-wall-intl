@@ -176,7 +176,7 @@ export function Step1BasicInfo({
       <div className="space-y-3">
         <label className="text-sm font-medium text-gray-300 flex items-center gap-1.5">
           <Tag className="w-4 h-4 text-zinc-400" />
-          作品来源 <span className="text-red-500">*</span>
+          {t('tags')} <span className="text-red-500">*</span>
         </label>
         <div className="flex flex-wrap gap-2">
           {availableTags.map(tag => {

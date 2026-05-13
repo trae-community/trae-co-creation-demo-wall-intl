@@ -41,6 +41,8 @@
     "editTitle": "Edit Proyek",
     "editDescription": "Perbarui informasi proyek Anda di bawah ini.",
     "basicInfo": "Informasi Dasar",
+    "visualAssets": "Aset Visual",
+    "creationDetails": "Detail Kreasi",
     "projectName": "Nama Proyek",
     "projectNamePlaceholder": "Beri nama yang menarik untuk proyek Anda",
     "country": "Provinsi / Wilayah",

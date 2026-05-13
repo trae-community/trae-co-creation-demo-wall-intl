@@ -41,6 +41,8 @@
     "editTitle": "Edit Project",
     "editDescription": "Update your project information below.",
     "basicInfo": "Basic Information",
+    "visualAssets": "Visual Assets",
+    "creationDetails": "Creation Details",
     "projectName": "Project Name",
     "projectNamePlaceholder": "Give your project a catchy name",
     "country": "Province / Region",

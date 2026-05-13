@@ -2,15 +2,9 @@
 
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 export type StepNumber = 1 | 2 | 3 | 4
-
-const STEPS: { n: StepNumber; label: string }[] = [
-  { n: 1, label: '基本信息' },
-  { n: 2, label: '视觉素材' },
-  { n: 3, label: '创作详情' },
-  { n: 4, label: '团队信息' },
-]
 
 interface StepIndicatorProps {
   current: StepNumber
@@ -18,6 +12,13 @@ interface StepIndicatorProps {
 }
 
 export function StepIndicator({ current, onStepClick }: StepIndicatorProps) {
+  const t = useTranslations('Submit')
+  const STEPS: { n: StepNumber; label: string }[] = [
+    { n: 1, label: t('basicInfo') },
+    { n: 2, label: t('visualAssets') },
+    { n: 3, label: t('creationDetails') },
+    { n: 4, label: t('teamInfo') },
+  ]
   return (
     <div className="flex items-center justify-between mb-10">
       {STEPS.map((step, idx) => {
