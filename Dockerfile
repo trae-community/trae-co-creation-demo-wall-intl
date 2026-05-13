@@ -48,7 +48,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install dependencies
-RUN npm ci
+RUN npm install -g npm@11 && npm ci
 
 # Install tsx for seed script
 RUN npm install -D tsx
