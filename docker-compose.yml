@@ -127,18 +127,6 @@ services:
     networks:
       - trae-network
 
-  nginx:
-    image: docker.cnb.cool/jaguarliu.cool/wenyuan-ai/docker-sync/nginx:alpine_amd64
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - app
-    restart: unless-stopped
-    networks:
-      - trae-network
-
 volumes:
   postgres-data:
   postgres-dev-data:
