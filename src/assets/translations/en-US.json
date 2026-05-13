@@ -184,6 +184,7 @@
     "auditStatus": "Audit",
     "country": "Province",
     "city": "City",
+    "filters": "Filters",
     "dateLabel": "Date"
   },
   "Card": {

@@ -184,6 +184,7 @@
     "auditStatus": "Kiểm duyệt",
     "country": "Tỉnh",
     "city": "Thành phố",
+    "filters": "Bộ lọc",
     "dateLabel": "Ngày"
   },
   "Card": {
