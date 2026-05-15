@@ -6,10 +6,10 @@ import { getAuthUser, isAdmin } from '@/lib/auth';
 import { writeOperationLog } from '@/lib/audit-log';
 
 // Helper to sanitize user object (remove sensitive data)
-const sanitizeUser = (user: any) => {
+const sanitizeUser = (user: Record<string, unknown> | null) => {
   if (!user) return null;
   // Convert BigInt to string
-  const serialized = JSON.parse(JSON.stringify(user, (key, value) =>
+  const serialized = JSON.parse(JSON.stringify(user, (_key, value) =>
     typeof value === 'bigint' ? value.toString() : value
   ));
   // Remove passwordHash just in case it was selected
@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
       request: req
     });
     // Handle unique constraint violations
-    if ((error as any).code === 'P2002') {
+    if ((error as { code?: string }).code === 'P2002') {
       return NextResponse.json({ error: 'Email or Username already exists' }, { status: 409 });
     }
     return NextResponse.json({ error: 'Failed to create user' }, { status: 500 });
@@ -235,7 +235,7 @@ export async function PUT(req: NextRequest) {
       errorMessage: error instanceof Error ? error.message : 'unknown error',
       request: req
     });
-    if ((error as any).code === 'P2002') {
+    if ((error as { code?: string }).code === 'P2002') {
       return NextResponse.json({ error: 'Email or Username already exists' }, { status: 409 });
     }
     return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });

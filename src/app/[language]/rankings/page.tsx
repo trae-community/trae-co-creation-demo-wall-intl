@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Loader2, Trophy, MapPin, FileText, Users, Eye, ThumbsUp, Crown, Medal, User } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Link } from '@/lib/language/navigation'
 
@@ -136,7 +137,7 @@ export default function RankingsPage() {
     return data.creatorsRanking.byWorks
   }, [data, sortKey])
 
-  const mainTabs: { key: MainTab; icon: any; label: string }[] = [
+  const mainTabs: { key: MainTab; icon: LucideIcon; label: string }[] = [
     { key: 'cities', icon: MapPin, label: t('cityRanking') },
     { key: 'works', icon: FileText, label: t('workRanking') },
     { key: 'creators', icon: Users, label: t('creatorRanking') },

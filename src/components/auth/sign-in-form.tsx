@@ -1,26 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const signInSchema = z.object({
-  email: z.string().email("请输入有效的邮箱地址"),
-  password: z.string().min(6, "密码至少6个字符"),
-});
-
-type SignInFormData = z.infer<typeof signInSchema>;
-
 export function SignInForm() {
   const router = useRouter();
+  const t = useTranslations("Auth");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const signInSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t("validationEmailRequired")),
+        password: z.string().min(6, t("validationPasswordMin")),
+      }),
+    [t]
+  );
+
+  type SignInFormData = z.infer<typeof signInSchema>;
 
   const {
     register,

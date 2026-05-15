@@ -5,6 +5,7 @@ import { Plus, Edit, Trash2, Globe, ChevronDown, ChevronRight } from 'lucide-rea
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { useTranslations } from 'next-intl'
 
 import { CrudFeedback } from '@/components/crud/crud-feedback'
 import { CrudFilterBar } from '@/components/crud/crud-filter-bar'
@@ -21,13 +22,6 @@ import {
   DialogFooter,
   DialogDescription,
 } from '@/components/ui/dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { LoadingOverlay } from '@/components/common/loading-overlay'
@@ -53,30 +47,38 @@ interface Dict {
   items: DictItem[]
 }
 
-// Schemas
-const dictSchema = z.object({
-  dictCode: z.string().min(1, '请输入字典编码'),
-  dictName: z.string().min(1, '请输入字典名称'),
-  description: z.string().optional(),
-})
+interface DictFormValues {
+  dictCode: string
+  dictName: string
+  description?: string
+}
 
-const itemSchema = z.object({
-  itemLabel: z.string().min(1, '请输入默认显示标签'),
-  itemValue: z.string().min(1, '请输入存储值'),
-  labelZh: z.string().optional(),
-  labelEn: z.string().optional(),
-  labelJa: z.string().optional(),
-  labelId: z.string().optional(),
-  labelVi: z.string().optional(),
-  parentValue: z.string().optional(), // For hierarchical relationships (e.g., city belongs to country)
-  sortOrder: z.preprocess((value) => {
-    if (value === '' || value === null || value === undefined) return 0
-    const num = Number(value)
-    return Number.isNaN(num) ? 0 : num
-  }, z.number()),
-})
+interface ItemFormInput {
+  itemLabel: string
+  itemValue: string
+  labelZh?: string
+  labelEn?: string
+  labelJa?: string
+  labelId?: string
+  labelVi?: string
+  parentValue?: string
+  sortOrder: number | string
+}
+
+interface ItemFormOutput {
+  itemLabel: string
+  itemValue: string
+  labelZh?: string
+  labelEn?: string
+  labelJa?: string
+  labelId?: string
+  labelVi?: string
+  parentValue?: string
+  sortOrder: number
+}
 
 export default function DictionariesPage() {
+  const tConsole = useTranslations('Console')
   const [isLoading, setIsLoading] = useState(false)
   const [dicts, setDicts] = useState<Dict[]>([])
   const [totalItems, setTotalItems] = useState(0)
@@ -98,8 +100,39 @@ export default function DictionariesPage() {
   const [deletingDictId, setDeletingDictId] = useState<string | null>(null)
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null)
 
+  // Schemas
+  const dictSchema = useMemo(
+    () =>
+      z.object({
+        dictCode: z.string().min(1, tConsole('validationDictCodeRequired')),
+        dictName: z.string().min(1, tConsole('validationDictNameRequired')),
+        description: z.string().optional(),
+      }),
+    [tConsole]
+  )
+
+  const itemSchema = useMemo(
+    () =>
+      z.object({
+        itemLabel: z.string().min(1, tConsole('validationItemLabelRequired')),
+        itemValue: z.string().min(1, tConsole('validationItemValueRequired')),
+        labelZh: z.string().optional(),
+        labelEn: z.string().optional(),
+        labelJa: z.string().optional(),
+        labelId: z.string().optional(),
+        labelVi: z.string().optional(),
+        parentValue: z.string().optional(),
+        sortOrder: z.preprocess((value) => {
+          if (value === '' || value === null || value === undefined) return 0
+          const num = Number(value)
+          return Number.isNaN(num) ? 0 : num
+        }, z.number()),
+      }),
+    [tConsole]
+  )
+
   // Forms
-  const dictForm = useForm<z.infer<typeof dictSchema>>({
+  const dictForm = useForm<DictFormValues>({
     resolver: zodResolver(dictSchema),
     defaultValues: {
       dictCode: '',
@@ -107,9 +140,6 @@ export default function DictionariesPage() {
       description: '',
     }
   })
-
-  type ItemFormInput = z.input<typeof itemSchema>
-  type ItemFormOutput = z.output<typeof itemSchema>
 
   const itemForm = useForm<ItemFormInput, unknown, ItemFormOutput>({
     resolver: zodResolver(itemSchema),
@@ -165,7 +195,7 @@ export default function DictionariesPage() {
   }
 
   // Dictionary Operations
-  const onDictSubmit = async (values: z.infer<typeof dictSchema>) => {
+  const onDictSubmit = async (values: DictFormValues) => {
     try {
       setIsSavingDict(true)
       const url = '/api/dictionaries'

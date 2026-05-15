@@ -63,7 +63,7 @@ export default function CitiesPage() {
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()
         setStats(data.items || [])
-      } catch (err) {
+      } catch {
         setError(t('loadError'))
       } finally {
         setIsLoading(false)

@@ -14,9 +14,16 @@ interface DictItem {
   status: boolean;
 }
 
-async function getRawDictionaries() {
+type RawDictBundle = {
+  countryDict: unknown;
+  cityDict: unknown;
+  categoryDict: unknown;
+  honorDict: unknown;
+};
+
+async function getRawDictionaries(): Promise<RawDictBundle> {
   const cached = await getDictionaries();
-  if (cached) return cached as any;
+  if (cached) return cached as RawDictBundle;
 
   const [countryDict, cityDict, categoryDict, honorDict] = await Promise.all([
     prisma.sysDict.findUnique({ where: { dictCode: 'country' }, include: { items: true } }),

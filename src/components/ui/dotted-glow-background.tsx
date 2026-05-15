@@ -146,7 +146,7 @@ export const DottedGlowBackground = ({
         raf = requestAnimationFrame(draw);
         return;
       }
-      const dt = (now - last) / 1000;
+      const _dt = (now - last) / 1000;
       last = now;
       const { width, height } = container.getBoundingClientRect();
       ctx.clearRect(0, 0, el.width, el.height);

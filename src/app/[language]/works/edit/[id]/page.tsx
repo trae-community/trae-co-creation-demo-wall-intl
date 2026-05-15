@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getAuthUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { EditForm } from "../../../../../components/work/edit-form";
+import { EditForm, type BackendWorkData } from "../../../../../components/work/edit-form";
 
 // Define the type for InitialData to match SubmissionForm's expectations
 // This duplicates the type from SubmissionForm but ensures type safety here
@@ -102,5 +102,5 @@ export default async function EditPage({ params }: { params: Promise<{ id: strin
   if (initialData.highlights.length === 0) initialData.highlights.push({ value: "" }, { value: "" }, { value: "" });
   if (initialData.scenarios.length === 0) initialData.scenarios.push({ value: "" });
 
-  return <EditForm initialData={initialData as any} />;
+  return <EditForm initialData={initialData as unknown as BackendWorkData} />;
 }

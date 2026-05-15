@@ -1,10 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Plus, Edit, Trash2, Shield } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { useTranslations } from 'next-intl'
 
 import { CrudFeedback } from '@/components/crud/crud-feedback'
 import { CrudFilterBar } from '@/components/crud/crud-filter-bar'
@@ -32,16 +33,14 @@ interface RoleItem {
   description: string | null
 }
 
-// Schema
-const roleSchema = z.object({
-  roleCode: z.string().min(1, '请输入角色编码'),
-  roleName: z.string().min(1, '请输入角色名称'),
-  description: z.string().optional().or(z.literal('')),
-})
-
-type RoleFormValues = z.infer<typeof roleSchema>
+interface RoleFormValues {
+  roleCode: string
+  roleName: string
+  description?: string
+}
 
 export default function RolesPage() {
+  const tConsole = useTranslations('Console')
   const [isLoading, setIsLoading] = useState(false)
   const [roles, setRoles] = useState<RoleItem[]>([])
   const [totalItems, setTotalItems] = useState(0)
@@ -56,6 +55,16 @@ export default function RolesPage() {
   const [deletingRoleId, setDeletingRoleId] = useState<number | null>(null)
   
   const { feedback, showFeedback } = useFeedback()
+
+  const roleSchema = useMemo(
+    () =>
+      z.object({
+        roleCode: z.string().min(1, tConsole('validationRoleCodeRequired')),
+        roleName: z.string().min(1, tConsole('validationRoleNameRequired')),
+        description: z.string().optional().or(z.literal('')),
+      }),
+    [tConsole]
+  )
 
   // Form
   const form = useForm<RoleFormValues>({

@@ -6,8 +6,8 @@ import { getAuthUser, isAdmin } from '@/lib/auth';
 import { writeOperationLog } from '@/lib/audit-log';
 
 // Helper to sanitize object
-const sanitize = (data: any) => {
-  return JSON.parse(JSON.stringify(data, (key, value) =>
+const sanitize = (data: unknown) => {
+  return JSON.parse(JSON.stringify(data, (_key, value) =>
     typeof value === 'bigint' ? value.toString() : value
   ));
 };
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
       errorMessage: error instanceof Error ? error.message : 'unknown error',
       request: req
     });
-    if ((error as any).code === 'P2002') {
+    if ((error as { code?: string }).code === 'P2002') {
       return NextResponse.json({ error: 'Role Code already exists' }, { status: 409 });
     }
     return NextResponse.json({ error: 'Failed to create role' }, { status: 500 });
@@ -158,7 +158,7 @@ export async function PUT(req: NextRequest) {
       errorMessage: error instanceof Error ? error.message : 'unknown error',
       request: req
     });
-    if ((error as any).code === 'P2002') {
+    if ((error as { code?: string }).code === 'P2002') {
       return NextResponse.json({ error: 'Role Code already exists' }, { status: 409 });
     }
     return NextResponse.json({ error: 'Failed to update role' }, { status: 500 });

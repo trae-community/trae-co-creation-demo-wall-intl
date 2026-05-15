@@ -5,6 +5,7 @@ import { Plus, Edit, Trash2, Tag } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { useTranslations } from 'next-intl'
 
 import { CrudFeedback } from '@/components/crud/crud-feedback'
 import { CrudFilterBar } from '@/components/crud/crud-filter-bar'
@@ -40,16 +41,17 @@ interface WorkTag {
   auditEndTime: string | null
 }
 
-const tagSchema = z.object({
-  name: z.string().min(1, '请输入标签名称'),
-  isAutoAudit: z.enum(['true', 'false']),
-  auditStartDate: z.string().optional(),
-  auditStartClock: z.string().optional(),
-  auditEndDate: z.string().optional(),
-  auditEndClock: z.string().optional(),
-})
+interface TagFormValues {
+  name: string
+  isAutoAudit: 'true' | 'false'
+  auditStartDate?: string
+  auditStartClock?: string
+  auditEndDate?: string
+  auditEndClock?: string
+}
 
 export default function TagsPage() {
+  const tConsole = useTranslations('Console')
   const [isLoading, setIsLoading] = useState(false)
   const [tags, setTags] = useState<WorkTag[]>([])
   const [totalItems, setTotalItems] = useState(0)
@@ -63,7 +65,20 @@ export default function TagsPage() {
   const [deletingTagId, setDeletingTagId] = useState<number | null>(null)
   const { feedback, showFeedback } = useFeedback()
 
-  const tagForm = useForm<z.infer<typeof tagSchema>>({
+  const tagSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(1, tConsole('validationTagNameRequired')),
+        isAutoAudit: z.enum(['true', 'false']),
+        auditStartDate: z.string().optional(),
+        auditStartClock: z.string().optional(),
+        auditEndDate: z.string().optional(),
+        auditEndClock: z.string().optional(),
+      }),
+    [tConsole]
+  )
+
+  const tagForm = useForm<TagFormValues>({
     resolver: zodResolver(tagSchema),
     defaultValues: {
       name: '',

@@ -5,19 +5,23 @@ import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { toast } from 'sonner'
 import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough,
   Heading2, Heading3, List, ListOrdered, Link as LinkIcon, RemoveFormatting
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getRichTextLength } from '@/lib/rich-text'
 
 interface RichTextEditorProps {
   value: string
   onChange: (html: string) => void
   placeholder?: string
   hasError?: boolean
+  minLength?: number
+  maxLength?: number
+  minHint?: string
 }
 
 const ToolbarButton = ({
@@ -44,10 +48,15 @@ const ToolbarButton = ({
   </button>
 )
 
-export function RichTextEditor({ value, onChange, placeholder, hasError }: RichTextEditorProps) {
+export function RichTextEditor({ value, onChange, placeholder, hasError, minLength, maxLength, minHint }: RichTextEditorProps) {
   // Track if this is the initial mount to properly sync external value
   const isInitialMount = useRef(true)
   const previousValueRef = useRef<string>(value)
+
+  const plainTextLength = useMemo(() => getRichTextLength(value || ''), [value])
+  const showCounter = typeof minLength === 'number' || typeof maxLength === 'number'
+  const belowMin = typeof minLength === 'number' && plainTextLength < minLength
+  const overMax = typeof maxLength === 'number' && plainTextLength > maxLength
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -173,6 +182,29 @@ export function RichTextEditor({ value, onChange, placeholder, hasError }: RichT
 
       {/* Editor area */}
       <EditorContent editor={editor} />
+
+      {/* Footer: character counter + min hint */}
+      {showCounter && (
+        <div className="flex items-center justify-between gap-2 px-3 py-1.5 border-t border-zinc-700/60 text-xs">
+          <span className={cn(
+            "transition-colors",
+            belowMin ? "text-amber-400" : "text-zinc-500"
+          )}>
+            {minHint || ''}
+          </span>
+          <span className={cn(
+            "tabular-nums font-mono",
+            overMax ? "text-red-400" : belowMin ? "text-amber-400" : "text-emerald-500/80"
+          )}>
+            {plainTextLength}
+            {typeof maxLength === 'number'
+              ? ` / ${maxLength}`
+              : typeof minLength === 'number'
+                ? ` / ${minLength}+`
+                : ''}
+          </span>
+        </div>
+      )}
     </div>
   )
 }

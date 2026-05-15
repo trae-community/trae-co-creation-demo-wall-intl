@@ -8,9 +8,10 @@ import { buildWorkFormSchema, WorkFormValues } from "@/lib/work-form";
 import { Button } from "@/components/common/action-button";
 import { Select } from "@/components/common/form-select";
 import { AlertCircle, CheckCircle, UploadCloud, Link as LinkIcon, Users, MapPin, FileText, Image as ImageIcon, Globe, Plus, Trash2, LayoutGrid } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
+import { useCallback, useState, useEffect, useMemo } from "react";
 import { useLocale, useTranslations } from 'next-intl';
 import { RichTextEditor } from "@/app/[language]/submit/editor/RichTextEditor";
+import { STORY_MIN_LENGTH } from "@/lib/rich-text";
 
 export interface BackendWorkData {
   id: string;
@@ -44,8 +45,8 @@ export interface BackendWorkData {
 export function EditForm({ initialData, onSuccess, onCancel }: { initialData: BackendWorkData; onSuccess?: () => void; onCancel?: () => void }) {
   const t = useTranslations('Submit');
   const locale = useLocale();
-  const [uploadingCover, setUploadingCover] = useState(false);
-  const [uploadingScreenshots, setUploadingScreenshots] = useState(false);
+  const [, setUploadingCover] = useState(false);
+  const [, setUploadingScreenshots] = useState(false);
 
   // Helper to safely parse JSON or return as array
   const normalizeStringList = (input: unknown): string[] => {
@@ -56,7 +57,7 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
         const parsed = JSON.parse(input);
         if (Array.isArray(parsed)) return parsed.map(String);
       }
-    } catch (e) {
+    } catch {
       console.warn("Failed to parse list:", input);
     }
     return [];
@@ -138,7 +139,6 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
     name: "team"
   });
 
-  const coverUrl = watch("coverUrl");
   const screenshots = watch("screenshots") || [];
   const selectedCountry = watch("country");
   const selectedTags = watch("tags") || [];
@@ -216,7 +216,7 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
     setValue("screenshots", newScreenshots);
   };
 
-  const fetchTags = async () => {
+  const fetchTags = useCallback(async () => {
     try {
       const response = await fetch('/api/tags/all');
       if (!response.ok) throw new Error(`Failed to fetch tags: ${response.statusText}`);
@@ -225,9 +225,9 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
     } catch (err) {
       console.error("Failed to fetch tags:", err);
     }
-  };
+  }, []);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const apiLang = locale === 'zh' ? 'zh-CN' : locale === 'en' ? 'en-US' : locale === 'ja' ? 'ja-JP' : locale;
       const [categoryRes, devStatusRes] = await Promise.all([
@@ -241,9 +241,9 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
     } catch (err) {
       console.error("Failed to fetch dictionaries:", err);
     }
-  };
+  }, [locale]);
 
-  const fetchLocations = async () => {
+  const fetchLocations = useCallback(async () => {
     try {
       const apiLang = locale === 'zh' ? 'zh-CN' : locale === 'en' ? 'en-US' : locale === 'ja' ? 'ja-JP' : locale;
       const [countryRes, cityRes] = await Promise.all([
@@ -257,20 +257,20 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
     } catch (err) {
       console.error("Failed to fetch locations:", err);
     }
-  };
+  }, [locale]);
 
   useEffect(() => {
     fetchTags();
     fetchCategories();
     fetchLocations();
-  }, [locale]);
+  }, [fetchTags, fetchCategories, fetchLocations]);
 
   useEffect(() => {
     // Only clear city if user manually changes country, not on initial load
     if (selectedCountry && selectedCountry !== initialData.countryCode) {
       setValue("city", "");
     }
-  }, [selectedCountry]);
+  }, [selectedCountry, initialData.countryCode, setValue]);
 
   // Filter cities based on selected country
   const filteredCities = useMemo(() => {
@@ -538,6 +538,8 @@ export function EditForm({ initialData, onSuccess, onCancel }: { initialData: Ba
                   onChange={field.onChange}
                   placeholder={t('storyPlaceholder')}
                   hasError={!!errors.story}
+                  minLength={STORY_MIN_LENGTH}
+                  minHint={t('storyMinHint', { min: STORY_MIN_LENGTH })}
                 />
               )}
             />

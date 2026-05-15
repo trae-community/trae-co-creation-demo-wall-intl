@@ -6,6 +6,7 @@ import { AlertCircle, Plus, Trash2, Link as LinkIcon, FileText } from 'lucide-re
 import { Button } from '@/components/common/action-button'
 import { RichTextEditor } from '@/app/[language]/submit/editor/RichTextEditor'
 import { WorkFormValues } from '@/lib/work-form'
+import { STORY_MIN_LENGTH } from '@/lib/rich-text'
 
 interface Step3Props {
   form: UseFormReturn<WorkFormValues>
@@ -48,6 +49,8 @@ export function Step3Content({ form }: Step3Props) {
               onChange={field.onChange}
               placeholder={t('storyPlaceholder')}
               hasError={!!errors.story}
+              minLength={STORY_MIN_LENGTH}
+              minHint={t('storyMinHint', { min: STORY_MIN_LENGTH })}
             />
           )}
         />

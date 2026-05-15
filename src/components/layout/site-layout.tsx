@@ -30,7 +30,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   const langMenuRef = useRef<HTMLDivElement>(null);
 
   // Fetch user roles from API
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [roles, setRoles] = useState<string[]>([]);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 

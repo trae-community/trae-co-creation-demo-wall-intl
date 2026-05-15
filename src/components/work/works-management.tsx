@@ -1,11 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Edit, Trash2, Eye, ThumbsUp, Calendar, User, MapPin, Tag, Code, Award, ShieldCheck, Users, Phone, Mail, ExternalLink, ChevronLeft, ChevronRight, Search } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 import { CrudFeedback } from '@/components/crud/crud-feedback'
@@ -36,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { EditForm } from '@/components/work/edit-form'
+import { EditForm, type BackendWorkData } from '@/components/work/edit-form'
 import { LoadingOverlay } from '@/components/common/loading-overlay'
 
 // Types
@@ -103,23 +101,7 @@ interface DictItem {
   labelI18n?: Record<string, string> | null
 }
 
-// Schema
-const workSchema = z.object({
-  title: z.string().min(1, '请输入作品名称'),
-  summary: z.string().optional().or(z.literal('')),
-  coverUrl: z.string().optional().or(z.literal('')),
-  countryCode: z.string().optional().or(z.literal('')),
-  cityCode: z.string().optional().or(z.literal('')),
-  categoryCode: z.string().optional().or(z.literal('')),
-  devStatusCode: z.string().optional().or(z.literal('')),
-  userId: z.string().min(1, '请选择所属用户'),
-  teamMembers: z.string().optional().or(z.literal('')),
-  teamIntro: z.string().optional().or(z.literal('')),
-  contactPhone: z.string().optional().or(z.literal('')),
-  contactEmail: z.string().email('请输入有效邮箱地址').optional().or(z.literal('')),
-})
-
-type WorkFormValues = z.infer<typeof workSchema>
+// Schema and types are constructed inside the component so validation messages can be localized.
 
 interface WorksManagementProps {
   scope?: 'admin' | 'user'
@@ -136,6 +118,31 @@ export function WorksManagement({
   const lang = (params?.lang as string) || 'zh-CN'
   const router = useRouter()
   const locale = useLocale()
+  const tConsole = useTranslations('Console')
+
+  const workSchema = useMemo(
+    () =>
+      z.object({
+        title: z.string().min(1, tConsole('validationWorkTitleRequired')),
+        summary: z.string().optional().or(z.literal('')),
+        coverUrl: z.string().optional().or(z.literal('')),
+        countryCode: z.string().optional().or(z.literal('')),
+        cityCode: z.string().optional().or(z.literal('')),
+        categoryCode: z.string().optional().or(z.literal('')),
+        devStatusCode: z.string().optional().or(z.literal('')),
+        userId: z.string().min(1, tConsole('validationWorkUserRequired')),
+        teamMembers: z.string().optional().or(z.literal('')),
+        teamIntro: z.string().optional().or(z.literal('')),
+        contactPhone: z.string().optional().or(z.literal('')),
+        contactEmail: z
+          .string()
+          .email(tConsole('validationWorkContactEmail'))
+          .optional()
+          .or(z.literal('')),
+      }),
+    [tConsole]
+  )
+  void workSchema
   
   const [isLoading, setIsLoading] = useState(false)
   const [works, setWorks] = useState<WorkItem[]>([])
@@ -291,7 +298,7 @@ export function WorksManagement({
       } else {
         showFeedback('error', '获取作品详情失败')
       }
-    } catch (error) {
+    } catch {
       showFeedback('error', '获取作品详情失败')
     } finally {
       setIsLoading(false)
@@ -740,7 +747,7 @@ export function WorksManagement({
           </DialogHeader>
           {editingWork && (
             <EditForm
-              initialData={editingWork as any}
+              initialData={editingWork as unknown as BackendWorkData}
               onSuccess={handleEditSuccess}
               onCancel={() => setIsDialogOpen(false)}
             />

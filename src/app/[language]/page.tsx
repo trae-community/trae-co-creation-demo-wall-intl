@@ -26,7 +26,7 @@ export default function Page() {
   });
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || "");
   const [debouncedSearch, setDebouncedSearch] = useState(searchParams.get('search') || "");
-  const [sortBy, setSortBy] = useState<'time' | 'likes' | 'views'>((searchParams.get('sort') as any) || 'time');
+  const [sortBy, setSortBy] = useState<'time' | 'likes' | 'views'>((searchParams.get('sort') as 'time' | 'likes' | 'views') || 'time');
   const [selectedDate, setSelectedDate] = useState(searchParams.get('date') || '');
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const pageSize = 12;

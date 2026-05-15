@@ -20,7 +20,6 @@ interface Step1Props {
 export function Step1BasicInfo({
   form,
   availableCountries,
-  availableCities,
   availableCategories,
   availableDevStatuses,
   availableTags,

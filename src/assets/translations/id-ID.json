@@ -45,8 +45,8 @@
     "creationDetails": "Detail Kreasi",
     "projectName": "Nama Proyek",
     "projectNamePlaceholder": "Beri nama yang menarik untuk proyek Anda",
-    "country": "Provinsi / Wilayah",
-    "countryPlaceholder": "Pilih Provinsi",
+    "country": "Negara/Wilayah",
+    "countryPlaceholder": "Pilih Negara/Wilayah",
     "city": "Kota",
     "cityPlaceholder": "Pilih kota",
     "category": "Kategori",
@@ -114,7 +114,7 @@
     "validationNameMax": "Nama proyek tidak boleh melebihi 50 karakter",
     "validationIntroMin": "Pengenalan minimal 10 karakter",
     "validationIntroMax": "Pengenalan tidak boleh melebihi 100 karakter",
-    "validationCountry": "Silakan pilih negara",
+    "validationCountry": "Silakan pilih negara/wilayah",
     "validationCity": "Silakan pilih kota",
     "validationCategory": "Silakan pilih kategori",
     "validationTagsMin": "Silakan pilih minimal 1 tag",
@@ -122,6 +122,7 @@
     "validationTeam": "Silakan isi anggota tim",
     "validationCover": "Silakan unggah gambar sampul",
     "validationStoryMin": "Kisah minimal 20 karakter",
+    "storyMinHint": "Minimal {min} karakter",
     "validationHighlightRequired": "Silakan masukkan konten sorotan",
     "validationHighlightMax": "Sorotan maksimal 30 karakter",
     "validationHighlightsMin": "Minimal 1 sorotan diperlukan",
@@ -161,7 +162,7 @@
     "aboutProject": "Tentang Proyek Ini",
     "aboutProjectDesc": "Proyek ini dikirimkan di acara offline TRAE Friends@Hangzhou. Jika Anda tertarik dengan proyek ini, Anda dapat mempelajari lebih lanjut melalui repositori kode atau tautan Demo.",
     "aboutAuthor": "Tentang Penulis",
-    "country": "Provinsi",
+    "country": "Negara/Wilayah",
     "city": "Kota",
     "category": "Kategori",
     "honors": "Penghargaan",
@@ -184,7 +185,7 @@
     "type": "Jenis",
     "honor": "Penghargaan",
     "auditStatus": "Audit",
-    "country": "Provinsi",
+    "country": "Negara/Wilayah",
     "city": "Kota",
     "filters": "Filter",
     "dateLabel": "Tanggal"
@@ -228,10 +229,10 @@
     "likes": "Suka",
     "hasWorks": "Ada Karya",
     "noWorks": "Belum Ada Karya",
-    "filterByProvince": "Filter berdasarkan Provinsi",
-    "allProvinces": "Semua Provinsi",
+    "filterByProvince": "Filter berdasarkan Negara/Wilayah",
+    "allProvinces": "Semua Negara/Wilayah",
     "clearFilter": "Hapus Filter",
-    "noCitiesInProvince": "Tidak ada kota di provinsi ini"
+    "noCitiesInProvince": "Tidak ada kota di negara/wilayah ini"
   },
   "Profile": {
     "menu": "Profil",
@@ -251,7 +252,7 @@
     "introPlaceholder": "Ceritakan kepada orang lain apa yang Anda bangun.",
     "phoneLabel": "Telepon",
     "phonePlaceholder": "Nomor kontak opsional",
-    "countryLabel": "Provinsi / Wilayah",
+    "countryLabel": "Negara/Wilayah",
     "countryPlaceholder": "mis. Indonesia",
     "cityLabel": "Kota",
     "cityPlaceholder": "mis. Jakarta",
@@ -316,5 +317,25 @@
     "author": "Penulis",
     "loadError": "Gagal memuat peringkat. Silakan segarkan.",
     "noData": "Belum ada data peringkat."
+  },
+  "Auth": {
+    "validationUsernameMin": "Nama pengguna minimal 2 karakter",
+    "validationEmailRequired": "Masukkan alamat email yang valid",
+    "validationPasswordMin": "Kata sandi minimal 6 karakter",
+    "validationPasswordMismatch": "Konfirmasi kata sandi tidak cocok"
+  },
+  "Console": {
+    "validationUsernameRequired": "Masukkan nama pengguna",
+    "validationEmailInvalid": "Masukkan alamat email yang valid",
+    "validationRoleCodeRequired": "Masukkan kode peran",
+    "validationRoleNameRequired": "Masukkan nama peran",
+    "validationTagNameRequired": "Masukkan nama tag",
+    "validationDictCodeRequired": "Masukkan kode kamus",
+    "validationDictNameRequired": "Masukkan nama kamus",
+    "validationItemLabelRequired": "Masukkan label tampilan default",
+    "validationItemValueRequired": "Masukkan nilai yang disimpan",
+    "validationWorkTitleRequired": "Masukkan judul karya",
+    "validationWorkUserRequired": "Pilih pengguna pemilik",
+    "validationWorkContactEmail": "Masukkan alamat email yang valid"
   }
 }

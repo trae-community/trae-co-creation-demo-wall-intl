@@ -6,8 +6,8 @@ import { getAuthUser, isAdmin } from '@/lib/auth';
 import { writeOperationLog } from '@/lib/audit-log';
 
 // Helper to sanitize object
-const sanitize = (data: any) => {
-  return JSON.parse(JSON.stringify(data, (key, value) =>
+const sanitize = (data: unknown) => {
+  return JSON.parse(JSON.stringify(data, (_key, value) =>
     typeof value === 'bigint' ? value.toString() : value
   ));
 };
@@ -453,7 +453,7 @@ export async function PUT(req: NextRequest) {
     ) {
       const normalizedMembers = Array.isArray(teamMembers)
         ? teamMembers
-            .map((member: any) => String(member).trim())
+            .map((member: unknown) => String(member).trim())
             .filter(Boolean)
             .map((value: string) => ({ value }))
         : [];

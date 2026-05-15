@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthUser } from "@/lib/auth";
 import { writeOperationLog } from "@/lib/audit-log";
-import { sanitizeRichText, stripHtmlTags } from "@/lib/rich-text";
+import { sanitizeRichText, stripHtmlTags, STORY_MIN_LENGTH } from "@/lib/rich-text";
 import { z } from "zod";
 const hasValidTeamMembers = (value: string) => {
   try {
@@ -23,13 +23,13 @@ const submissionSchema = z.object({
   intro: z.string().min(10).max(100),
   country: z.string().min(1),
   city: z.string().min(1),
-  team: z.string().refine(hasValidTeamMembers, '请至少填写1名团队成员'),
+  team: z.string().refine(hasValidTeamMembers, 'At least one team member is required'),
   teamIntro: z.string().min(1),
   contactPhone: z.string().optional(),
   contactEmail: z.string().email().optional().or(z.literal("")),
   coverUrl: z.string().min(1),
   // story may be HTML from Tiptap — validate on stripped plain text
-  story: z.string().refine(s => stripHtmlTags(s).length >= 20, '创作故事至少20个字符'),
+  story: z.string().refine(s => stripHtmlTags(s).length >= STORY_MIN_LENGTH, `Story must be at least ${STORY_MIN_LENGTH} characters`),
   category: z.string().min(1),
   devStatus: z.string().optional(),
   tags: z.array(z.number()).min(1).max(5),

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { STORY_MIN_LENGTH, getRichTextLength } from '@/lib/rich-text';
 
 export interface WorkFormValues {
   name: string;
@@ -53,7 +54,11 @@ export function buildWorkFormSchema(
     contactPhone: z.string(),
     contactEmail: z.union([z.string().email(t('validationEmail')), z.literal('')]),
     coverUrl: z.string().min(1, t('validationCover')),
-    story: z.string().min(20, t('validationStoryMin')),
+    story: z
+      .string()
+      .refine((value) => getRichTextLength(value) >= STORY_MIN_LENGTH, {
+        message: t('validationStoryMin'),
+      }),
     highlights: z
       .array(
         z.object({

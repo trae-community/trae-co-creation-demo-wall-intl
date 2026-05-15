@@ -411,10 +411,14 @@ export function WorkDetailView() {
             onClick={() => openImagePreview([work.coverUrl], 0, work.name)}
             title={t('clickToPreview')}
           />
-          <div className="absolute top-4 right-4 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-xs text-white/90 backdrop-blur-sm transition-opacity group-hover:opacity-100 opacity-90">
+          <button
+            type="button"
+            onClick={() => openImagePreview([work.coverUrl], 0, work.name)}
+            className="absolute top-4 right-4 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-xs text-white/90 backdrop-blur-sm transition-opacity hover:bg-black/75 group-hover:opacity-100 opacity-90 cursor-pointer z-10"
+          >
             {t('clickToPreview')}
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
+          </button>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end pointer-events-none">
             <div className="p-8 text-white w-full">
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-primary text-black text-xs font-bold px-2 py-1 rounded">
@@ -540,9 +544,13 @@ export function WorkDetailView() {
                     onClick={() => openImagePreview(screenshotList, activeScreenshotIndex, t('screenshots'))}
                     title={t('clickToPreview')}
                   />
-                  <div className="absolute top-4 right-4 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-xs text-white/90 backdrop-blur-sm transition-opacity group-hover:opacity-100 opacity-90">
+                  <button
+                    type="button"
+                    onClick={() => openImagePreview(screenshotList, activeScreenshotIndex, t('screenshots'))}
+                    className="absolute top-4 right-4 rounded-full border border-white/15 bg-black/55 px-3 py-1 text-xs text-white/90 backdrop-blur-sm transition-opacity hover:bg-black/75 group-hover:opacity-100 opacity-90 cursor-pointer z-10"
+                  >
                     {t('clickToPreview')}
-                  </div>
+                  </button>
                   {screenshotList.length > 1 && (
                     <>
                       <button

@@ -45,8 +45,8 @@
     "creationDetails": "Creation Details",
     "projectName": "Project Name",
     "projectNamePlaceholder": "Give your project a catchy name",
-    "country": "Province / Region",
-    "countryPlaceholder": "Select Province",
+    "country": "Country/Region",
+    "countryPlaceholder": "Select Country/Region",
     "city": "City",
     "cityPlaceholder": "Select a city",
     "category": "Category",
@@ -114,7 +114,7 @@
     "validationNameMax": "Project name cannot exceed 50 characters",
     "validationIntroMin": "Introduction must be at least 10 characters",
     "validationIntroMax": "Introduction cannot exceed 100 characters",
-    "validationCountry": "Please select a country",
+    "validationCountry": "Please select a country/region",
     "validationCity": "Please select a city",
     "validationCategory": "Please select a category",
     "validationTagsMin": "Please select at least 1 tag",
@@ -122,6 +122,7 @@
     "validationTeam": "Please fill in team members",
     "validationCover": "Please upload a cover image",
     "validationStoryMin": "Story must be at least 20 characters",
+    "storyMinHint": "At least {min} characters",
     "validationHighlightRequired": "Please enter highlight content",
     "validationHighlightMax": "Highlight must be at most 30 characters",
     "validationHighlightsMin": "At least 1 highlight required",
@@ -161,7 +162,7 @@
     "aboutProject": "About This Project",
     "aboutProjectDesc": "This project was submitted at the TRAE Friends@Hangzhou offline event. If you're interested in this project, you can learn more through the code repository or Demo link.",
     "aboutAuthor": "About the Author",
-    "country": "Province",
+    "country": "Country/Region",
     "city": "City",
     "category": "Category",
     "honors": "Honors",
@@ -184,7 +185,7 @@
     "type": "Type",
     "honor": "Honor",
     "auditStatus": "Audit",
-    "country": "Province",
+    "country": "Country/Region",
     "city": "City",
     "filters": "Filters",
     "dateLabel": "Date"
@@ -228,10 +229,10 @@
     "likes": "Likes",
     "hasWorks": "Has Works",
     "noWorks": "No Works Yet",
-    "filterByProvince": "Filter by Province",
-    "allProvinces": "All Provinces",
+    "filterByProvince": "Filter by Country/Region",
+    "allProvinces": "All Countries/Regions",
     "clearFilter": "Clear Filter",
-    "noCitiesInProvince": "No cities in this province"
+    "noCitiesInProvince": "No cities in this country/region"
   },
   "Profile": {
     "menu": "Profile",
@@ -251,7 +252,7 @@
     "introPlaceholder": "Tell others what you are building.",
     "phoneLabel": "Phone",
     "phonePlaceholder": "Optional contact number",
-    "countryLabel": "Province / Region",
+    "countryLabel": "Country/Region",
     "countryPlaceholder": "e.g. China",
     "cityLabel": "City",
     "cityPlaceholder": "e.g. Hangzhou",
@@ -316,5 +317,25 @@
     "author": "Author",
     "loadError": "Failed to load rankings. Please refresh.",
     "noData": "No ranking data available yet."
+  },
+  "Auth": {
+    "validationUsernameMin": "Username must be at least 2 characters",
+    "validationEmailRequired": "Please enter a valid email address",
+    "validationPasswordMin": "Password must be at least 6 characters",
+    "validationPasswordMismatch": "Passwords do not match"
+  },
+  "Console": {
+    "validationUsernameRequired": "Please enter a username",
+    "validationEmailInvalid": "Please enter a valid email address",
+    "validationRoleCodeRequired": "Please enter a role code",
+    "validationRoleNameRequired": "Please enter a role name",
+    "validationTagNameRequired": "Please enter a tag name",
+    "validationDictCodeRequired": "Please enter a dictionary code",
+    "validationDictNameRequired": "Please enter a dictionary name",
+    "validationItemLabelRequired": "Please enter a default label",
+    "validationItemValueRequired": "Please enter a stored value",
+    "validationWorkTitleRequired": "Please enter the work title",
+    "validationWorkUserRequired": "Please select the owner user",
+    "validationWorkContactEmail": "Please enter a valid email address"
   }
 }

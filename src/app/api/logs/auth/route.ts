@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * pageSize
     const take = pageSize
 
-    const where: any = {}
+    const where: Record<string, unknown> = {}
 
     // Handle filter
     if (filter !== 'all') {

@@ -6,7 +6,11 @@ export const RICH_TEXT_SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedSchemes: ['http', 'https', 'mailto'],
 };
 
+export const STORY_MIN_LENGTH = 20;
+
 export const stripHtmlTags = (html: string) => html.replace(/<[^>]*>/g, '').trim();
+
+export const getRichTextLength = (html: string) => stripHtmlTags(html).length;
 
 export const sanitizeRichText = (html: string) =>
   sanitizeHtml(html, RICH_TEXT_SANITIZE_OPTIONS);

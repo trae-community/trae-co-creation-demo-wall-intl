@@ -47,8 +47,8 @@
     "teamInfo": "チーム情報",
     "projectName": "プロジェクト名",
     "projectNamePlaceholder": "プロジェクトに素敵な名前をつけましょう",
-    "country": "都道府県",
-    "countryPlaceholder": "都道府県を選択",
+    "country": "国/地域",
+    "countryPlaceholder": "国/地域を選択",
     "city": "都市",
     "cityPlaceholder": "都市を選択",
     "category": "カテゴリ",
@@ -120,7 +120,7 @@
     "validationIntroMin": "紹介文は10文字以上必要です",
     "validationIntroMax": "紹介文は100文字以内にしてください",
     "validationCity": "都市を選択してください",
-    "validationCountry": "国を選択してください",
+    "validationCountry": "国/地域を選択してください",
     "validationCategory": "カテゴリを選択してください",
     "validationTagsMin": "タグを1個以上選択してください",
     "validationTagsMax": "タグは最大5個まで",
@@ -129,6 +129,8 @@
     "validationTeamMin": "最低1人のチームメンバーが必要です",
     "validationTeamIntro": "チーム紹介を入力してください",
     "validationCover": "カバー画像をアップロードしてください",
+    "validationStoryMin": "制作ストーリーは20文字以上必要です",
+    "storyMinHint": "{min}文字以上",
     "validationProblemMin": "問題の説明は20文字以上必要です",
     "validationSolutionMin": "解決方法は20文字以上必要です",
     "validationDemoUrl": "有効なデモリンクを入力してください",
@@ -168,7 +170,7 @@
     "aboutProject": "作品について",
     "aboutProjectDesc": "この作品はTRAE Friends@杭州オフラインイベントで投稿されました。このプロジェクトに興味がある場合は、コードリポジトリやデモリンクから詳しく確認できます。",
     "aboutAuthor": "著者について",
-    "country": "都道府県",
+    "country": "国/地域",
     "city": "都市",
     "category": "タイプ",
     "honors": "受賞",
@@ -191,7 +193,7 @@
     "type": "タイプ",
     "honor": "栄誉",
     "auditStatus": "審査",
-    "country": "都道府県",
+    "country": "国/地域",
     "city": "都市",
     "filters": "フィルター",
     "dateLabel": "日付"
@@ -235,10 +237,10 @@
     "likes": "いいね数",
     "hasWorks": "作品あり",
     "noWorks": "作品なし",
-    "filterByProvince": "都道府県で絞り込み",
-    "allProvinces": "すべての都道府県",
-    "clearFilter": "絞り込みを解除",
-    "noCitiesInProvince": "この都道府県には都市がありません"
+    "filterByProvince": "国/地域で絞り込み",
+    "allProvinces": "すべての国/地域",
+    "clearFilter": "フィルターをクリア",
+    "noCitiesInProvince": "この国/地域には都市がありません"
   },
   "Profile": {
     "menu": "プロフィール",
@@ -258,7 +260,7 @@
     "introPlaceholder": "今取り組んでいることを紹介してください。",
     "phoneLabel": "電話番号",
     "phonePlaceholder": "任意の連絡先",
-    "countryLabel": "都道府県 / 地域",
+    "countryLabel": "国/地域",
     "countryPlaceholder": "例：Japan",
     "cityLabel": "都市",
     "cityPlaceholder": "例：Tokyo",
@@ -323,5 +325,25 @@
     "author": "作者",
     "loadError": "ランキングデータの読み込みに失敗しました",
     "noData": "まだランキングデータがありません"
+  },
+  "Auth": {
+    "validationUsernameMin": "ユーザー名は2文字以上で入力してください",
+    "validationEmailRequired": "有効なメールアドレスを入力してください",
+    "validationPasswordMin": "パスワードは6文字以上で入力してください",
+    "validationPasswordMismatch": "パスワードが一致しません"
+  },
+  "Console": {
+    "validationUsernameRequired": "ユーザー名を入力してください",
+    "validationEmailInvalid": "有効なメールアドレスを入力してください",
+    "validationRoleCodeRequired": "ロールコードを入力してください",
+    "validationRoleNameRequired": "ロール名を入力してください",
+    "validationTagNameRequired": "タグ名を入力してください",
+    "validationDictCodeRequired": "辞書コードを入力してください",
+    "validationDictNameRequired": "辞書名を入力してください",
+    "validationItemLabelRequired": "デフォルトのラベルを入力してください",
+    "validationItemValueRequired": "保存する値を入力してください",
+    "validationWorkTitleRequired": "作品名を入力してください",
+    "validationWorkUserRequired": "所属ユーザーを選択してください",
+    "validationWorkContactEmail": "有効なメールアドレスを入力してください"
   }
 }

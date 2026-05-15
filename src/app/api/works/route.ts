@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 import { getDictionaries } from '@/lib/edge-config';
 import { getAuthUser } from '@/lib/auth'
-import { sanitizeRichText, stripHtmlTags } from '@/lib/rich-text'
+import { sanitizeRichText, stripHtmlTags, STORY_MIN_LENGTH } from '@/lib/rich-text'
 import { z } from 'zod'
 
 const updateSchema = z.object({
@@ -16,7 +16,7 @@ const updateSchema = z.object({
   contactPhone: z.string().optional(),
   contactEmail: z.string().email().optional().or(z.literal('')),
   coverUrl: z.string().min(1),
-  story: z.string().refine(value => stripHtmlTags(value).length >= 20),
+  story: z.string().refine(value => stripHtmlTags(value).length >= STORY_MIN_LENGTH),
   category: z.string().min(1),
   devStatus: z.string().min(1),
   tags: z.array(z.number()).min(1).max(5),
@@ -30,7 +30,7 @@ const updateSchema = z.object({
 async function getRawDictionaries() {
   // 尝试从 Edge Config 读取
   const cached = await getDictionaries()
-  if (cached) return cached as any
+  if (cached) return cached as Record<string, unknown>
   // 回退到数据库查询
   const [countryDict, cityDict, categoryDict, honorDict] = await Promise.all([
     prisma.sysDict.findUnique({ where: { dictCode: 'country' }, include: { items: true } }),
@@ -57,7 +57,7 @@ async function getRawDictionaries() {
   return result
 }
 
-async function updateEdgeConfig(data: any) {
+async function updateEdgeConfig(data: Record<string, unknown>) {
   try {
     const edgeConfigId = process.env.EDGE_CONFIG?.match(/ecfg_[a-z0-9]+/)?.[0]
     if (!edgeConfigId || !process.env.VERCEL_API_TOKEN) return

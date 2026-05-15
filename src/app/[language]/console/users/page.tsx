@@ -1,10 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Plus, User, Mail, Phone, Calendar, Shield } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import { useTranslations } from 'next-intl'
 
 import { CrudFeedback } from '@/components/crud/crud-feedback'
 import { CrudFilterBar } from '@/components/crud/crud-filter-bar'
@@ -25,7 +26,6 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { LoadingOverlay } from '@/components/common/loading-overlay'
 import { Link } from '@/lib/language/navigation'
 
 // Types
@@ -48,19 +48,17 @@ interface UserItem {
   roles: { role: Role }[]
 }
 
-// Schema
-const userSchema = z.object({
-  username: z.string().min(1, '请输入用户名'),
-  email: z.string().email('请输入有效的邮箱地址'),
-  phone: z.string().optional().or(z.literal('')),
-  bio: z.string().optional().or(z.literal('')),
-  avatarUrl: z.string().optional().or(z.literal('')),
-})
-
-type UserFormValues = z.infer<typeof userSchema>
+interface UserFormValues {
+  username: string
+  email: string
+  phone?: string
+  bio?: string
+  avatarUrl?: string
+}
 
 export default function UsersPage() {
-  const [isLoading, setIsLoading] = useState(false)
+  const tConsole = useTranslations('Console')
+  const [, setIsLoading] = useState(false)
   const [users, setUsers] = useState<UserItem[]>([])
   const [totalItems, setTotalItems] = useState(0)
   const [searchTerm, setSearchTerm] = useState('')
@@ -79,6 +77,18 @@ export default function UsersPage() {
   const [isSavingRoles, setIsSavingRoles] = useState(false)
 
   const { feedback, showFeedback } = useFeedback()
+
+  const userSchema = useMemo(
+    () =>
+      z.object({
+        username: z.string().min(1, tConsole('validationUsernameRequired')),
+        email: z.string().email(tConsole('validationEmailInvalid')),
+        phone: z.string().optional().or(z.literal('')),
+        bio: z.string().optional().or(z.literal('')),
+        avatarUrl: z.string().optional().or(z.literal('')),
+      }),
+    [tConsole]
+  )
 
   // Form
   const form = useForm<UserFormValues>({

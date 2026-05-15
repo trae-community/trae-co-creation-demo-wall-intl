@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
-import { Loader2, MapPin, Save, Sparkles, User, LogOut, Camera, Key, Pencil, X } from "lucide-react";
+import { Loader2, Save, Sparkles, User, LogOut, Camera, Key, Pencil, X } from "lucide-react";
 import { toast } from 'sonner';
 import { WorksManagement } from "@/components/work/works-management";
 import { LikedWorks } from "@/components/work/liked-works";
@@ -80,7 +80,7 @@ export default function ProfilePage() {
     confirmPassword: "",
   });
 
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       setIsLoading(true);
       setError("");
@@ -102,11 +102,11 @@ export default function ProfilePage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     fetchProfile();
-  }, [t]);
+  }, [fetchProfile]);
 
   const hasChanges = useMemo(() => {
     if (!data) return false;

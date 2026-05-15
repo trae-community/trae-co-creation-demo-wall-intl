@@ -45,8 +45,8 @@
     "creationDetails": "创作详情",
     "projectName": "项目名称",
     "projectNamePlaceholder": "给你的项目起个响亮的名字",
-    "country": "所属省份",
-    "countryPlaceholder": "选择省份",
+    "country": "国家/地区",
+    "countryPlaceholder": "选择国家/地区",
     "city": "所属城市",
     "cityPlaceholder": "选择城市",
     "category": "项目类别",
@@ -113,7 +113,7 @@
     "validationNameMax": "项目名称不能超过50个字符",
     "validationIntroMin": "简介至少10个字符",
     "validationIntroMax": "简介不能超过100个字符",
-    "validationCountry": "请选择所属省份",
+    "validationCountry": "请选择国家/地区",
     "validationCity": "请选择所属城市",
     "validationCategory": "请选择项目类别",
     "validationTagsRequired": "请选择作品来源",
@@ -122,6 +122,7 @@
     "validationTeam": "请填写团队成员",
     "validationCover": "请上传封面图",
     "validationStoryMin": "创作故事至少20个字符",
+    "storyMinHint": "至少 {min} 个字符",
     "validationHighlightRequired": "请填写亮点内容",
     "validationHighlightMax": "亮点内容不能超过30个字符",
     "validationHighlightsMin": "至少需要1个亮点",
@@ -161,7 +162,7 @@
     "aboutProject": "关于作品",
     "aboutProjectDesc": "该作品由TRAE Friends线下活动提交。如果您对该项目感兴趣，可以通过代码仓库或Demo链接进一步了解。",
     "aboutAuthor": "关于作者",
-    "country": "省份",
+    "country": "国家/地区",
     "city": "城市",
     "category": "类型",
     "honors": "荣誉",
@@ -184,7 +185,7 @@
     "type": "类型",
     "honor": "荣誉",
     "auditStatus": "审核",
-    "country": "省份",
+    "country": "国家/地区",
     "city": "城市",
     "filters": "筛选",
     "dateLabel": "日期"
@@ -228,10 +229,10 @@
     "likes": "点赞数",
     "hasWorks": "有作品",
     "noWorks": "暂无作品",
-    "filterByProvince": "按省份筛选",
-    "allProvinces": "全部省份",
+    "filterByProvince": "按国家/地区筛选",
+    "allProvinces": "全部国家/地区",
     "clearFilter": "清除筛选",
-    "noCitiesInProvince": "该省份暂无城市数据"
+    "noCitiesInProvince": "该国家/地区暂无城市数据"
   },
   "Profile": {
     "menu": "个人主页",
@@ -251,7 +252,7 @@
     "introPlaceholder": "告诉大家你正在做什么。",
     "phoneLabel": "联系电话",
     "phonePlaceholder": "可选联系方式",
-    "countryLabel": "省份 / 地区",
+    "countryLabel": "国家/地区",
     "countryPlaceholder": "例如：中国",
     "cityLabel": "城市",
     "cityPlaceholder": "例如：杭州",
@@ -316,5 +317,25 @@
     "author": "作者",
     "loadError": "排行数据加载失败，请刷新重试",
     "noData": "暂无排行数据"
+  },
+  "Auth": {
+    "validationUsernameMin": "用户名至少2个字符",
+    "validationEmailRequired": "请输入有效的邮箱地址",
+    "validationPasswordMin": "密码至少6个字符",
+    "validationPasswordMismatch": "两次密码不一致"
+  },
+  "Console": {
+    "validationUsernameRequired": "请输入用户名",
+    "validationEmailInvalid": "请输入有效的邮箱地址",
+    "validationRoleCodeRequired": "请输入角色编码",
+    "validationRoleNameRequired": "请输入角色名称",
+    "validationTagNameRequired": "请输入标签名称",
+    "validationDictCodeRequired": "请输入字典编码",
+    "validationDictNameRequired": "请输入字典名称",
+    "validationItemLabelRequired": "请输入默认显示标签",
+    "validationItemValueRequired": "请输入存储值",
+    "validationWorkTitleRequired": "请输入作品名称",
+    "validationWorkUserRequired": "请选择所属用户",
+    "validationWorkContactEmail": "请输入有效邮箱地址"
   }
 }

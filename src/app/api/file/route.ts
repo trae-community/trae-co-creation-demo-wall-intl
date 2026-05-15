@@ -96,7 +96,7 @@ export async function DELETE(request: Request) {
             { status: 400 }
           );
         }
-      } catch (e) {
+      } catch {
         return NextResponse.json(
           { success: false, error: "Invalid URL" },
           { status: 400 }

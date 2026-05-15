@@ -8,22 +8,19 @@ import {
   LayoutDashboard,
   FolderKanban,
   BookOpen,
-  Building2,
-  Tags,
   Users,
-  Shield,
   Logs,
-  ShieldCheck,
   Menu,
   X,
   ChevronDown
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type NavItem = {
   name: string
   href?: string
-  icon?: any
+  icon?: LucideIcon
   children?: NavItem[]
 }
 
@@ -39,7 +36,7 @@ export default function ConsoleLayout({
   const [expandedGroups, setExpandedGroups] = useState<string[]>([])
 
   // Fetch user roles from API
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const [roles, setRoles] = useState<string[]>([])
   const [rolesLoaded, setRolesLoaded] = useState(false)
 

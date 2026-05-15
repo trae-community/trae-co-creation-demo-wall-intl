@@ -1,31 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const signUpSchema = z.object({
-  username: z.string().min(2, "用户名至少2个字符"),
-  email: z.string().email("请输入有效的邮箱地址"),
-  password: z.string().min(6, "密码至少6个字符"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "两次密码不一致",
-  path: ["confirmPassword"],
-});
-
-type SignUpFormData = z.infer<typeof signUpSchema>;
-
 export function SignUpForm() {
   const router = useRouter();
+  const t = useTranslations("Auth");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const signUpSchema = useMemo(
+    () =>
+      z
+        .object({
+          username: z.string().min(2, t("validationUsernameMin")),
+          email: z.string().email(t("validationEmailRequired")),
+          password: z.string().min(6, t("validationPasswordMin")),
+          confirmPassword: z.string(),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+          message: t("validationPasswordMismatch"),
+          path: ["confirmPassword"],
+        }),
+    [t]
+  );
+
+  type SignUpFormData = z.infer<typeof signUpSchema>;
 
   const {
     register,
