@@ -14,11 +14,13 @@ interface DictItem {
   status: boolean;
 }
 
+type RawDict = { items: DictItem[] } | null;
+
 type RawDictBundle = {
-  countryDict: unknown;
-  cityDict: unknown;
-  categoryDict: unknown;
-  honorDict: unknown;
+  countryDict: RawDict;
+  cityDict: RawDict;
+  categoryDict: RawDict;
+  honorDict: RawDict;
 };
 
 async function getRawDictionaries(): Promise<RawDictBundle> {

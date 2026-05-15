@@ -122,11 +122,13 @@ export default function DictionariesPage() {
         labelId: z.string().optional(),
         labelVi: z.string().optional(),
         parentValue: z.string().optional(),
-        sortOrder: z.preprocess((value) => {
-          if (value === '' || value === null || value === undefined) return 0
-          const num = Number(value)
-          return Number.isNaN(num) ? 0 : num
-        }, z.number()),
+        sortOrder: z
+          .union([z.string(), z.number()])
+          .transform((value) => {
+            if (value === '' || value === null || value === undefined) return 0
+            const num = Number(value)
+            return Number.isNaN(num) ? 0 : num
+          }),
       }),
     [tConsole]
   )
